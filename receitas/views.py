@@ -1,13 +1,17 @@
 from django.shortcuts import render
 
-def index(request):
-    receitas = {
-        1:'Lasanha',
-        2:'Sopa de legumes',
-        3:'Sorvete'
-    }
+from .models import Receita
 
-    dados = { 'nomes_das_receitas': receitas }
+def index(request):
+    receitas = Receita.objects.all()
+    # Execute o comando python manage.py loaddata initial-data.json 
+    # para carregar os dados iniciais do modelo.
+
+    # Para gerar esses dados a partir do banco de dados, use o 
+    # comando python manage.py dumpdata <nome do app[.nome do modelo]>:
+    #     python manage.py dumpdata receitas.Receita
+
+    dados = { 'receitas': receitas }
 
     return render(request, 'index.html', dados)
 
